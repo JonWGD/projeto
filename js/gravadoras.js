@@ -35,10 +35,26 @@ function listar() {
         linha.querySelector(_ + 'dataRegistro').textContent = gravadora.dataRegistro;
         linha.querySelector(_ + 'contato').textContent = gravadora.contato;
 
+        linha.querySelector(".btn-outline-danger").addEventListener("click", function() {
+            excluir(gravadora.prefixo);
+        });
+
         fragmento.appendChild(linha);
     });
 
     tabela.replaceChildren(fragmento);
+}
+
+function excluir(prefixo) {
+  const indice = arrayGravadoras.findIndex(gravadora => gravadora.prefixo === prefixo);
+
+  arrayGravadoras.splice(indice, 1);
+  salvar();
+}
+
+function salvar() {
+  persistir(CHAVE, arrayGravadoras);
+  listar();
 }
 
 listar()
