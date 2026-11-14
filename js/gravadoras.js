@@ -20,3 +20,25 @@ function recuperarRegistros(chave) {
     const registros = localStorage.getItem(chave);
     return registros === null ? null : JSON.parse(registros);
 }
+
+function listar() {
+    const fragmento = document.createDocumentFragment();
+    const template = document.getElementById("template");
+    const _ = '[data-campo='
+
+    arrayGravadoras.forEach(gravadora => {
+        const linha = template.content.querySelector("tr").cloneNode(true);
+
+        linha.querySelector(_ + 'nome').textContent = gravadora.nome;
+        linha.querySelector(_ + 'pais').textContent = gravadora.pais;
+        linha.querySelector(_ + 'prefixo').textContent = gravadora.prefixo;
+        linha.querySelector(_ + 'dataRegistro').textContent = gravadora.dataRegistro;
+        linha.querySelector(_ + 'contato').textContent = gravadora.contato;
+
+        fragmento.appendChild(linha);
+    });
+
+    tabela.replaceChildren(fragmento);
+}
+
+listar()
