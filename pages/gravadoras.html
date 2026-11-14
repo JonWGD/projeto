@@ -58,39 +58,41 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col" class="ps-3">Nome</th>
-                        <th scope="col">Pais</th>
-                        <th scope="col">Prefixo</th>
-                        <th scope="col">Data de Registro</th>
-                        <th scope="col">Contato</th>
-                        <th scope="col">Ações</th>
+                        <th class="ps-3">Nome</th>
+                        <th>Pais</th>
+                        <th>Prefixo</th>
+                        <th>Data de Registro</th>
+                        <th>Contato</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
-
-                <!-- PESQUISAR COMO UTILIZAR TAMPLATE! -->
-                <tbody>
-                    <tr>
-                        <td class="ps-3 py-3 fw-semibold">MJJ</td>
-                        <td>Estados Unidos</td>
-                        <td>USSM1</td>
-                        <td>11/11/2026</td>
-                        <td>infomjj@epic.com</td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-sm btn-outline-primary">Editar</button>
-                                <button type="button" class="btn btn-sm btn-outline-danger">Excluir</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="tabela"></tbody>
             </table>
+
+            <!-- Template: Tabela -->
+            <template id="template">
+                <tr>
+                    <td data-campo="nome" class="ps-3"></td>
+                    <td data-campo="pais"></td>
+                    <td data-campo="prefixo"></td>
+                    <td data-campo="dataRegistro"></td>
+                    <td data-campo="contato"></td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-outline-primary btn-sm">Editar</button>
+                            <button type="button" class="btn btn-outline-danger btn-sm">Excluir</button>
+                        </div>
+                    </td>
+                </tr>
+            </template>
         </section>
     </main>
+
     <!-- Popover -->
     <div id="popover-registro" popover role="dialog"
         class="col-11 col-md-8 col-lg-7 col-xl-5 border-0 rounded-3 shadow-lg bg-body mh-100 overflow-y-auto">
 
-        <!-- Formulário -->
+        <!-- Popover: Formulário -->
         <form id="form-registro" class="row g-3 p-4 m-0">
 
             <div class="col-12">
@@ -116,7 +118,8 @@
 
             <!-- Botões -->
             <div class="col-12 d-flex justify-content-end gap-3 border-top pt-3 mt-4">
-                <button type="button" class="btn btn-outline-secondary" popovertarget="popover-registro" popovertargetaction="hide">
+                <button type="button" class="btn btn-outline-secondary" popovertarget="popover-registro"
+                    popovertargetaction="hide">
                     Cancelar
                 </button>
 
@@ -126,6 +129,7 @@
             </div>
         </form>
     </div>
+    <script src="../js/gravadoras.js" defer></script>
 </body>
 
 </html>
