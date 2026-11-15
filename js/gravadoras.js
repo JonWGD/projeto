@@ -35,7 +35,7 @@ function listar() {
         linha.querySelector(_ + 'dataRegistro').textContent = gravadora.dataRegistro;
         linha.querySelector(_ + 'contato').textContent = gravadora.contato;
 
-        linha.querySelector(".btn-outline-danger").addEventListener("click", function() {
+        linha.querySelector(".btn-outline-danger").addEventListener("click", function () {
             excluir(gravadora.prefixo);
         });
 
@@ -46,15 +46,49 @@ function listar() {
 }
 
 function excluir(prefixo) {
-  const indice = arrayGravadoras.findIndex(gravadora => gravadora.prefixo === prefixo);
+    const indice = arrayGravadoras.findIndex(gravadora => gravadora.prefixo === prefixo);
 
-  arrayGravadoras.splice(indice, 1);
-  salvar();
+    arrayGravadoras.splice(indice, 1);
+    salvar();
 }
 
 function salvar() {
-  persistir(CHAVE, arrayGravadoras);
-  listar();
+    persistir(CHAVE, arrayGravadoras);
+    listar();
 }
+
+function prefixoExiste(prefixo) {
+    return arrayGravadoras.some(gravadora => gravadora.prefixo === prefixo);
+}
+
+function registrar() {
+    const dados = {
+        nome: document.getElementById("nome").value,
+        pais: document.getElementById("pais").value,
+        prefixo: document.getElementById("prefixo").value.toUpperCase(),
+        dataRegistro: new Date().toLocaleDateString("pt-BR"),
+        contato: document.getElementById("contato").value
+    };
+
+    if (prefixoExiste(dados.prefixo)) {
+        alert("O prefixo já existe.");
+        return false;
+    }
+
+    adicionar(dados);
+
+    document.getElementById("form-registro").reset();
+    document.getElementById("popover-registro").hidePopover();
+}
+
+function adicionar(dados) {
+    arrayGravadoras.push(dados);
+    salvar();
+}
+
+document.getElementById("form-registro").onsubmit = evento => {
+    evento.preventDefault();
+    registrar();
+};
 
 listar()
