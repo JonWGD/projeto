@@ -90,10 +90,24 @@ function adicionar(dados) {
     salvar();
 }
 
+// Comportamento do botão "Salvar registro" do formulário
 document.getElementById("form-registro").onsubmit = evento => {
     evento.preventDefault();
     registrar();
 };
+
+// Comportamento do botão "Registrar" da página
+document.getElementById("botao-registrar").addEventListener("click", () => {
+    document.getElementById("popover-registro").showPopover();
+    document.getElementById("prefixo").disabled = false;
+    document.getElementById("botao-confirmar").textContent = "Salvar registro";
+});
+
+// Comportamento do botão "Cancelar" do formulário
+document.getElementById("botao-cancelar").addEventListener("click", () => {
+    document.getElementById("form-registro").reset();
+    document.getElementById("popover-registro").hidePopover();
+});
 
 function editar(prefixo) {
     const gravadora = arrayGravadoras.find(gravadora => gravadora.prefixo === prefixo);

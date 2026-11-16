@@ -45,8 +45,7 @@
                 <div class="col-lg-4">
                     <div class="d-flex gap-2">
                         <button id="botao-pesquisar" type="submit" class="btn btn-outline-primary flex-fill">Pesquisar</button>
-                        <button id="botao-registrar" type="button" class="btn btn-primary flex-fill" popovertarget="popover-registro"
-                            popovertargetaction="show">
+                        <button id="botao-registrar" type="button" class="btn btn-primary flex-fill">
                             + Registrar</button>
                     </div>
                 </div>
@@ -79,8 +78,8 @@
                     <td data-campo="contato"></td>
                     <td>
                         <div class="d-flex gap-2">
-                            <button id="botao-editar" type="button" class="btn btn-outline-primary btn-sm">Editar</button>
-                            <button id="botao-excluir" type="button" class="btn btn-outline-danger btn-sm">Excluir</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm">Editar</button>
+                            <button type="button" class="btn btn-outline-danger btn-sm">Excluir</button>
                         </div>
                     </td>
                 </tr>
@@ -89,7 +88,7 @@
     </main>
 
     <!-- Popover -->
-    <div id="popover-registro" popover role="dialog"
+    <div id="popover-registro" popover="manual"
         class="col-11 col-md-8 col-lg-7 col-xl-5 border-0 rounded-3 shadow-lg bg-body mh-100 overflow-y-auto">
 
         <!-- Popover: Formulário -->
@@ -118,8 +117,7 @@
 
             <!-- Botões -->
             <div class="col-12 d-flex justify-content-end gap-3 border-top pt-3 mt-4">
-                <button id="botao-cancelar" type="button" class="btn btn-outline-secondary" popovertarget="popover-registro"
-                    popovertargetaction="hide">
+                <button id="botao-cancelar" type="button" class="btn btn-outline-secondary">
                     Cancelar
                 </button>
 
