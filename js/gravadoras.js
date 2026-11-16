@@ -35,6 +35,10 @@ function listar() {
         linha.querySelector(_ + 'dataRegistro').textContent = gravadora.dataRegistro;
         linha.querySelector(_ + 'contato').textContent = gravadora.contato;
 
+        linha.querySelector(".btn-outline-primary").addEventListener("click", function () {
+            editar(gravadora.prefixo);
+        });
+
         linha.querySelector(".btn-outline-danger").addEventListener("click", function () {
             excluir(gravadora.prefixo);
         });
@@ -90,5 +94,38 @@ document.getElementById("form-registro").onsubmit = evento => {
     evento.preventDefault();
     registrar();
 };
+
+function editar(prefixo) {
+    const gravadora = arrayGravadoras.find(gravadora => gravadora.prefixo === prefixo);
+
+    document.getElementById("nome").value = gravadora.nome;
+    document.getElementById("pais").value = gravadora.pais;
+    document.getElementById("prefixo").value = gravadora.prefixo;
+    document.getElementById("prefixo").disabled = true;
+    document.getElementById("contato").value = gravadora.contato;
+
+    document.getElementById("botao-confirmar").textContent = "Salvar edições";
+
+    document.getElementById("form-registro").onsubmit = evento => {
+        evento.preventDefault();
+        atualizar(prefixo);
+    }
+
+    document.getElementById("popover-registro").showPopover();
+}
+
+function atualizar(prefixo) {
+    const gravadora = arrayGravadoras.find(gravadora => gravadora.prefixo === prefixo);
+
+    Object.assign(gravadora, {
+        nome: document.getElementById("nome").value,
+        pais: document.getElementById("pais").value,
+        contato: document.getElementById("contato").value.toLowerCase()
+    });
+
+    salvar();
+    document.getElementById("popover-registro").hidePopover();
+
+}
 
 listar()
