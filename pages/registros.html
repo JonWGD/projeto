@@ -29,7 +29,7 @@
         <section class="card border-0 shadow-sm p-3 p-md-4 mb-4">
             <h2 class="h5 mb-3">Pesquisar gravações</h2>
 
-            <form class="row g-3 align-items-end">
+            <form id="form-pesquisa" class="row g-3 align-items-end">
                 <div class="col-lg-4">
                     <label for="pesquisa-artista" class="form-label">Artista</label>
                     <input type="search" id="pesquisa-artista" name="artista" class="form-control"
@@ -44,8 +44,10 @@
 
                 <div class="col-lg-4">
                     <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-outline-primary flex-fill">Pesquisar</button>
-                        <button type="button" class="btn btn-primary flex-fill">+ Registrar</button>
+                        <button id="botao-pesquisar" type="submit"
+                            class="btn btn-outline-primary flex-fill">Pesquisar</button>
+                        <button id="botao-registrar" type="button" class="btn btn-primary flex-fill">
+                            + Registrar</button>
                     </div>
                 </div>
             </form>
@@ -56,44 +58,93 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col" class="ps-3">Artista</th>
-                        <th scope="col">Título</th>
-                        <th scope="col">Versão</th>
-                        <th scope="col">Ano</th>
-                        <th scope="col">Duração</th>
-                        <th scope="col">ISRC</th>
-                        <th scope="col">Gravadora</th>
-                        <th scope="col">Lançamento</th>
-                        <th scope="col">UPC</th>
-                        <th scope="col">Ações</th>
+                        <th class="ps-3">Artista</th>
+                        <th>Título</th>
+                        <th>Versão</th>
+                        <th>Ano</th>
+                        <th>Duração</th>
+                        <th>ISRC</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
-
-                <!-- PESQUISAR COMO UTILIZAR TAMPLATE! -->
-                <tbody>
-                    <tr>
-                        <td class="ps-3 py-3 fw-semibold">Michael Jackson</td>
-                        <td>Chicago</td>
-                        <td>Papercha$er Remix</td>
-                        <td>2014</td>
-                        <td>4:19</td>
-                        <td>USSM11401761</td>
-                        <td>MJJ</td>
-                        <td>XSCAPE (Sony Xperia Lounge)</td>
-                        <td>0886444557351</td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-sm btn-outline-primary">Editar</button>
-                                <button type="button" class="btn btn-sm btn-outline-danger">Excluir</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="tabela"></tbody>
             </table>
-        </section>
 
+            <!-- Template: Tabela -->
+            <template id="template">
+                <tr>
+                    <td data-campo="artista" class="ps-3"></td>
+                    <td data-campo="titulo"></td>
+                    <td data-campo="versao"></td>
+                    <td data-campo="ano"></td>
+                    <td data-campo="duracao"></td>
+                    <td data-campo="isrc"></td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-outline-primary btn-sm">Editar</button>
+                            <button type="button" class="btn btn-outline-danger btn-sm">Excluir</button>
+                        </div>
+                    </td>
+                </tr>
+            </template>
+        </section>
     </main>
 
+    <!-- Popover -->
+    <div id="popover-registro" popover="manual"
+        class="col-11 col-md-8 col-lg-7 col-xl-5 border-0 rounded-3 shadow-lg bg-body mh-100 overflow-y-auto">
+
+        <!-- Popover: Formulário -->
+        <form id="form-registro" class="row g-3 p-4 m-0">
+
+            <div class="col-12">
+                <label for="artista" class="form-label">Artista</label>
+                <input type="text" id="artista" name="artista" class="form-control" placeholder="Nome do artista"
+                    required>
+            </div>
+
+            <div class="col-12">
+                <label for="titulo" class="form-label">Título</label>
+                <input type="text" id="titulo" name="titulo" class="form-control" placeholder="Título da gravação"
+                    required>
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <label for="versao" class="form-label">Versão</label>
+                <input type="text" id="versao" name="versao" class="form-control" placeholder="Ex.: Ao Vivo">
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <label for="duracao" class="form-label">Duração</label>
+                <input type="text" id="duracao" name="duracao" class="form-control" placeholder="Ex.: 4:19">
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <label for="ano" class="form-label">Ano</label>
+                <input type="number" id="ano" name="ano" class="form-control" placeholder="Ex.: 2014" min="1900"
+                    max="2026" step="1" required>
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <label for="gravadora" class="form-label">Gravadora</label>
+                <select id="gravadora" name="gravadora" class="form-select" required>
+                    <option value="">Selecione uma gravadora</option>
+                </select>
+            </div>
+
+            <!-- Botões -->
+            <div class="col-12 d-flex justify-content-end gap-3 border-top pt-3 mt-4">
+                <button id="botao-cancelar" type="button" class="btn btn-outline-secondary">
+                    Cancelar
+                </button>
+
+                <button id="botao-confirmar" type="submit" class="btn btn-primary">
+                    Salvar registro
+                </button>
+            </div>
+        </form>
+    </div>
+    <script src="../js/registros.js" defer></script>
 </body>
 
 </html>
