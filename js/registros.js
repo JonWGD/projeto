@@ -13,6 +13,16 @@ if (arrayRegistros === null) {
     persistir(CHAVE, arrayRegistros);
 }
 
+let contadoresISRC = recuperarRegistros("contadoresISRC");
+
+if (contadoresISRC === null) {
+    contadoresISRC = {
+        "BRRS120": 1, "BRLUA26": 1, "BRLUA99": 1
+    };
+
+    persistir("contadoresISRC", contadoresISRC);
+}
+
 // Funções organizadas em ordem alfabética:
 function adicionar(dados) {
     arrayRegistros.push(dados);
@@ -77,6 +87,22 @@ function excluir(isrc) {
     salvar();
 }
 
+function gerarISRC(prefixo, ano) {
+    const base = prefixo + String(ano).slice(-2);
+    const contadores = recuperarRegistros("contadoresISRC") || {};
+
+    const proximo = (contadores[base] || 0) + 1;
+
+    if (proximo > 99999) {
+        throw new Error("Limite de ISRCs atingido.");
+    }
+
+    contadores[base] = proximo;
+    persistir("contadoresISRC", contadores);
+
+    return base + String(proximo).padStart(5, "0");
+}
+
 function listar(registros = arrayRegistros) {
     const fragmento = document.createDocumentFragment();
     const template = document.getElementById("template");
@@ -122,10 +148,6 @@ function pesquisar(artista = "", titulo = "") {
     listar(resultados);
 }
 
-function isrcExiste(isrc) {
-    return arrayRegistros.some(registro => registro.isrc === isrc);
-}
-
 function recuperarRegistros(chave) {
     const registros = localStorage.getItem(chave);
     return registros === null ? null : JSON.parse(registros);
@@ -138,14 +160,10 @@ function registrar() {
         versao: document.getElementById("versao").value,
         ano: document.getElementById("ano").value,
         duracao: document.getElementById("duracao").value,
-        gravadora: document.getElementById("gravadora").value,
-        isrc: document.getElementById("isrc").value.toUpperCase()
+        gravadora: document.getElementById("gravadora").value
     };
 
-    if (isrcExiste(dados.isrc)) {
-        alert("O ISRC já existe.");
-        return false;
-    }
+    dados.isrc = gerarISRC(dados.gravadora, dados.ano);
 
     adicionar(dados);
 
