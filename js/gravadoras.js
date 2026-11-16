@@ -67,7 +67,7 @@ function registrar() {
         pais: document.getElementById("pais").value,
         prefixo: document.getElementById("prefixo").value.toUpperCase(),
         dataRegistro: new Date().toLocaleDateString("pt-BR"),
-        contato: document.getElementById("contato").value
+        contato: document.getElementById("contato").value.toLowerCase(),
     };
 
     if (prefixoExiste(dados.prefixo)) {
