@@ -12,13 +12,50 @@ if (arrayGravadoras === null) {
     persistir(CHAVE, arrayGravadoras);
 }
 
-function persistir(chave, array) {
-    localStorage.setItem(chave, JSON.stringify(array));
+// Funções organizadas em ordem alfabética:
+function adicionar(dados) {
+    arrayGravadoras.push(dados);
+    salvar();
 }
 
-function recuperarRegistros(chave) {
-    const registros = localStorage.getItem(chave);
-    return registros === null ? null : JSON.parse(registros);
+function atualizar(prefixo) {
+    const gravadora = arrayGravadoras.find(gravadora => gravadora.prefixo === prefixo);
+
+    Object.assign(gravadora, {
+        nome: document.getElementById("nome").value,
+        pais: document.getElementById("pais").value,
+        contato: document.getElementById("contato").value.toLowerCase()
+    });
+
+    salvar();
+    document.getElementById("popover-registro").hidePopover();
+
+}
+
+function editar(prefixo) {
+    const gravadora = arrayGravadoras.find(gravadora => gravadora.prefixo === prefixo);
+
+    document.getElementById("nome").value = gravadora.nome;
+    document.getElementById("pais").value = gravadora.pais;
+    document.getElementById("prefixo").value = gravadora.prefixo;
+    document.getElementById("prefixo").disabled = true;
+    document.getElementById("contato").value = gravadora.contato;
+
+    document.getElementById("botao-confirmar").textContent = "Salvar edições";
+
+    document.getElementById("form-registro").onsubmit = evento => {
+        evento.preventDefault();
+        atualizar(prefixo);
+    }
+
+    document.getElementById("popover-registro").showPopover();
+}
+
+function excluir(prefixo) {
+    const indice = arrayGravadoras.findIndex(gravadora => gravadora.prefixo === prefixo);
+
+    arrayGravadoras.splice(indice, 1);
+    salvar();
 }
 
 function listar(gravadoras = arrayGravadoras) {
@@ -49,20 +86,29 @@ function listar(gravadoras = arrayGravadoras) {
     tabela.replaceChildren(fragmento);
 }
 
-function excluir(prefixo) {
-    const indice = arrayGravadoras.findIndex(gravadora => gravadora.prefixo === prefixo);
-
-    arrayGravadoras.splice(indice, 1);
-    salvar();
+function persistir(chave, array) {
+    localStorage.setItem(chave, JSON.stringify(array));
 }
 
-function salvar() {
-    persistir(CHAVE, arrayGravadoras);
-    listar();
+function pesquisar(nome = "", pais = "") {
+    const nomeBusca = nome.trim().toLowerCase();
+    const paisBusca = pais.trim().toLowerCase();
+
+    const resultados = arrayGravadoras.filter(gravadora =>
+        gravadora.nome.toLowerCase().includes(nomeBusca) &&
+        gravadora.pais.toLowerCase().includes(paisBusca)
+    );
+
+    listar(resultados);
 }
 
 function prefixoExiste(prefixo) {
     return arrayGravadoras.some(gravadora => gravadora.prefixo === prefixo);
+}
+
+function recuperarRegistros(chave) {
+    const registros = localStorage.getItem(chave);
+    return registros === null ? null : JSON.parse(registros);
 }
 
 function registrar() {
@@ -85,9 +131,9 @@ function registrar() {
     document.getElementById("popover-registro").hidePopover();
 }
 
-function adicionar(dados) {
-    arrayGravadoras.push(dados);
-    salvar();
+function salvar() {
+    persistir(CHAVE, arrayGravadoras);
+    listar();
 }
 
 // Comportamento do botão "Salvar registro" do formulário
@@ -117,51 +163,5 @@ document.getElementById("form-pesquisa").addEventListener("submit", evento => {
     const pais = document.getElementById("pesquisa-pais").value;
     pesquisar(nome, pais);
 });
-
-
-function editar(prefixo) {
-    const gravadora = arrayGravadoras.find(gravadora => gravadora.prefixo === prefixo);
-
-    document.getElementById("nome").value = gravadora.nome;
-    document.getElementById("pais").value = gravadora.pais;
-    document.getElementById("prefixo").value = gravadora.prefixo;
-    document.getElementById("prefixo").disabled = true;
-    document.getElementById("contato").value = gravadora.contato;
-
-    document.getElementById("botao-confirmar").textContent = "Salvar edições";
-
-    document.getElementById("form-registro").onsubmit = evento => {
-        evento.preventDefault();
-        atualizar(prefixo);
-    }
-
-    document.getElementById("popover-registro").showPopover();
-}
-
-function atualizar(prefixo) {
-    const gravadora = arrayGravadoras.find(gravadora => gravadora.prefixo === prefixo);
-
-    Object.assign(gravadora, {
-        nome: document.getElementById("nome").value,
-        pais: document.getElementById("pais").value,
-        contato: document.getElementById("contato").value.toLowerCase()
-    });
-
-    salvar();
-    document.getElementById("popover-registro").hidePopover();
-
-}
-
-function pesquisar(nome = "", pais = "") {
-    const nomeBusca = nome.trim().toLowerCase();
-    const paisBusca = pais.trim().toLowerCase();
-
-    const resultados = arrayGravadoras.filter(gravadora =>
-        gravadora.nome.toLowerCase().includes(nomeBusca) &&
-        gravadora.pais.toLowerCase().includes(paisBusca)
-    );
-
-    listar(resultados);
-}
 
 listar()
