@@ -29,7 +29,7 @@
         <section class="card border-0 shadow-sm p-3 p-md-4 mb-4">
             <h2 class="h5 mb-3">Pesquisar gravadoras</h2>
 
-            <form class="row g-3 align-items-end">
+            <form id="form-pesquisa" class="row g-3 align-items-end">
                 <div class="col-lg-4">
                     <label for="pesquisa-gravadora" class="form-label">Gravadora</label>
                     <input type="search" id="pesquisa-gravadora" name="gravadora" class="form-control"
@@ -44,7 +44,8 @@
 
                 <div class="col-lg-4">
                     <div class="d-flex gap-2">
-                        <button id="botao-pesquisar" type="submit" class="btn btn-outline-primary flex-fill">Pesquisar</button>
+                        <button id="botao-pesquisar" type="submit"
+                            class="btn btn-outline-primary flex-fill">Pesquisar</button>
                         <button id="botao-registrar" type="button" class="btn btn-primary flex-fill">
                             + Registrar</button>
                     </div>
@@ -106,7 +107,8 @@
 
             <div class="col-12 col-sm-6">
                 <label for="prefixo" class="form-label">Prefixo</label>
-                <input type="text" id="prefixo" name="prefixo" class="form-control" minlength="5" maxlength="5" placeholder="Ex.: BRGR1" required>
+                <input type="text" id="prefixo" name="prefixo" class="form-control" minlength="5" maxlength="5"
+                    placeholder="Ex.: BRGR1" required>
             </div>
 
             <div class="col-12 col-sm-6">

@@ -21,12 +21,12 @@ function recuperarRegistros(chave) {
     return registros === null ? null : JSON.parse(registros);
 }
 
-function listar() {
+function listar(gravadoras = arrayGravadoras) {
     const fragmento = document.createDocumentFragment();
     const template = document.getElementById("template");
     const _ = '[data-campo='
 
-    arrayGravadoras.forEach(gravadora => {
+    gravadoras.forEach(gravadora => {
         const linha = template.content.querySelector("tr").cloneNode(true);
 
         linha.querySelector(_ + 'nome').textContent = gravadora.nome;
@@ -109,6 +109,16 @@ document.getElementById("botao-cancelar").addEventListener("click", () => {
     document.getElementById("popover-registro").hidePopover();
 });
 
+// Comportamento do botao "Pesquisar" da página
+document.getElementById("form-pesquisa").addEventListener("submit", evento => {
+    evento.preventDefault();
+
+    const nome = document.getElementById("pesquisa-gravadora").value;
+    const pais = document.getElementById("pesquisa-pais").value;
+    pesquisar(nome, pais);
+});
+
+
 function editar(prefixo) {
     const gravadora = arrayGravadoras.find(gravadora => gravadora.prefixo === prefixo);
 
@@ -140,6 +150,18 @@ function atualizar(prefixo) {
     salvar();
     document.getElementById("popover-registro").hidePopover();
 
+}
+
+function pesquisar(nome = "", pais = "") {
+    const nomeBusca = nome.trim().toLowerCase();
+    const paisBusca = pais.trim().toLowerCase();
+
+    const resultados = arrayGravadoras.filter(gravadora =>
+        gravadora.nome.toLowerCase().includes(nomeBusca) &&
+        gravadora.pais.toLowerCase().includes(paisBusca)
+    );
+
+    listar(resultados);
 }
 
 listar()
