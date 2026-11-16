@@ -1,4 +1,5 @@
 const CHAVE = "arrayRegistros";
+const CHAVE_GRAVADORAS = "arrayGravadoras";
 const tabela = document.getElementById("tabela");
 
 let arrayRegistros = recuperarRegistros(CHAVE);
@@ -34,6 +35,20 @@ function atualizar(isrc) {
 
 }
 
+function carregarGravadoras() {
+    const select = document.getElementById("gravadora");
+    const gravadoras = recuperarRegistros(CHAVE_GRAVADORAS);
+
+    select.replaceChildren(new Option("Selecione uma gravadora", ""));
+
+    gravadoras.forEach(gravadora => {
+        const opcao = document.createElement("option");
+        opcao.value = gravadora.prefixo;
+        opcao.textContent = gravadora.nome;
+        select.appendChild(opcao);
+    });
+}
+
 function editar(isrc) {
     const registro = arrayRegistros.find(registro => registro.isrc === isrc);
 
@@ -42,7 +57,7 @@ function editar(isrc) {
     document.getElementById("versao").value = registro.versao;
     document.getElementById("ano").value = registro.ano;
     document.getElementById("duracao").value = registro.duracao;
-    document.getElementById("gravadora").value = registro.isrc;
+    document.getElementById("gravadora").value = registro.gravadora;
     document.getElementById("gravadora").disabled = true;
 
     document.getElementById("botao-confirmar").textContent = "Salvar edições";
@@ -151,6 +166,7 @@ document.getElementById("form-registro").onsubmit = evento => {
 
 // Comportamento do botão "Registrar" da página
 document.getElementById("botao-registrar").addEventListener("click", () => {
+    carregarGravadoras();
     document.getElementById("popover-registro").showPopover();
     document.getElementById("gravadora").disabled = false;
     document.getElementById("botao-confirmar").textContent = "Salvar registro";
@@ -171,4 +187,5 @@ document.getElementById("form-pesquisa").addEventListener("submit", evento => {
     pesquisar(artista, titulo);
 });
 
+carregarGravadoras()
 listar()
