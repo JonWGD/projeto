@@ -29,7 +29,7 @@
         <section class="card border-0 shadow-sm p-3 p-md-4 mb-4">
             <h2 class="h5 mb-3">Pesquisar lançamentos</h2>
 
-            <form class="row g-3 align-items-end">
+            <form id="form-pesquisa" class="row g-3 align-items-end">
                 <div class="col-lg-4">
                     <label for="pesquisa-artista" class="form-label">Artista</label>
                     <input type="search" id="pesquisa-artista" name="artista" class="form-control"
@@ -44,8 +44,10 @@
 
                 <div class="col-lg-4">
                     <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-outline-primary flex-fill">Pesquisar</button>
-                        <button type="button" class="btn btn-primary flex-fill">+ Registrar</button>
+                        <button id="botao-pesquisar" type="submit"
+                            class="btn btn-outline-primary flex-fill">Pesquisar</button>
+                        <button id="botao-registrar" type="button" class="btn btn-primary flex-fill">
+                            + Registrar</button>
                     </div>
                 </div>
             </form>
@@ -65,27 +67,72 @@
                     </tr>
                 </thead>
 
-                <!-- PESQUISAR COMO UTILIZAR TAMPLATE! -->
-                <tbody>
-                    <tr>
-                        <td class="ps-3 py-3 fw-semibold">Michael Jackson</td>
-                        <td>XSCAPE</td>
-                        <td>Sony Xperia Lounge</td>
-                        <td>9</td>
-                        <td>0886444557351</td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-sm btn-outline-primary">Editar</button>
-                                <button type="button" class="btn btn-sm btn-outline-danger">Excluir</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody id="tabela"></tbody>
             </table>
+
+            <!-- Template: Tabela -->
+            <template id="template">
+                <tr>
+                    <td data-campo="artista" class="ps-3"></td>
+                    <td data-campo="titulo"></td>
+                    <td data-campo="versao"></td>
+                    <td data-campo="quantidadeFaixas"></td>
+                    <td data-campo="upc"></td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-outline-primary btn-sm">Editar</button>
+                            <button type="button" class="btn btn-outline-danger btn-sm">Excluir</button>
+                        </div>
+                    </td>
+                </tr>
+            </template>
         </section>
 
     </main>
 
+    <!-- Popover -->
+    <div id="popover-registro" popover="manual"
+        class="col-11 col-md-8 col-lg-7 col-xl-5 border-0 rounded-3 shadow-lg bg-body mh-100 overflow-y-auto">
+
+        <!-- Popover: Formulário -->
+        <form id="form-registro" class="row g-3 p-4 m-0">
+
+            <div class="col-12">
+                <label for="artista" class="form-label">Artista</label>
+                <input type="text" id="artista" name="artista" class="form-control" placeholder="Nome do artista"
+                    required>
+            </div>
+
+            <div class="col-12">
+                <label for="titulo" class="form-label">Título</label>
+                <input type="text" id="titulo" name="titulo" class="form-control" placeholder="Título do lançamento"
+                    required>
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <label for="versao" class="form-label">Versão</label>
+                <input type="text" id="versao" name="versao" class="form-control" placeholder="Ex.: Edição Deluxe">
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <label for="upc" class="form-label">UPC</label>
+                <input type="text" id="upc" name="upc" class="form-control" inputmode="numeric"
+                    placeholder="Ex.: 0886444557351" required>
+            </div>
+
+            <!-- Botões -->
+            <div class="col-12 d-flex justify-content-end gap-3 border-top pt-3 mt-4">
+                <button id="botao-cancelar" type="button" class="btn btn-outline-secondary">
+                    Cancelar
+                </button>
+
+                <button id="botao-confirmar" type="submit" class="btn btn-primary">
+                    Salvar registro
+                </button>
+            </div>
+        </form>
+    </div>
+    <script src="../js/lancamentos.js" defer></script>
 </body>
 
 </html>
