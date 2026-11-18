@@ -144,6 +144,11 @@ document.getElementById("form-registro").onsubmit = evento => {
 
 // Comportamento do botão "Registrar" da página
 document.getElementById("botao-registrar").addEventListener("click", () => {
+    document.getElementById("form-registro").reset();
+    document.getElementById("form-registro").onsubmit = evento => {
+        evento.preventDefault();
+        registrar();
+    };
     document.getElementById("popover-registro").showPopover();
     document.getElementById("prefixo").disabled = false;
     document.getElementById("botao-confirmar").textContent = "Salvar registro";
